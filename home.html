@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+  <html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>UoG Degree Classification Calculator</title>
+    <link rel="icon" href="./assets/gradecalculator.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./css/styles.css">
+    <noscript><style>.requires-js{display:none}</style></noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header role="banner">
+      <h1>UoG Degree Classification Calculator</h1>
+      <a class="github-link"
+        href="https://github.com/CompEng0001/DegreeClassificationCalculator"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="View source on GitHub">
+        <span>Source code</span>
+        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="GitHub"
+            width="28" height="28" />
+      </a>
+    </header>
+    <main class="wrap" id="main">
+      <div class="grid">
+        <div class="col col-left">
+        <section class="card card1">
+          <h2>1) Enter your modules</h2>
+          <div class="controls" style="margin:8px 0 12px">
+            <label class="inline" for="schemeSelect">
+              <span class="muted">Scheme:</span>
+              <select id="schemeSelect" aria-label="Calculation scheme">
+                <option value="ug">Undergraduate</option>
+                <option value="im">Integrated Masters (L6/L7 = 20/80)</option>
+                <option value="masters">Masters (L7 average)</option>
+              </select>
+            </label>
+            </div>
+          <div class="controls" style="margin:8px 0 12px">
+            <label class="inline" id="ugPolicyWrap" style="display:none" title="Undergraduate policy">
+              <span class="muted">UG policy:</span>
+              <select id="ugPolicy" aria-label="Undergraduate policy">
+                <option value="before_2023">Started Degree Before 2023</option>
+                <option value="on_or_after_2023">Started Degree On or After 2023</option>
+              </select>
+            </label>
+          </div>
+          <div class="controls" style="margin:8px 0 12px">
+            <button class="btn-accent" id="addRowBtn">+ Add Module</button>
+            <button class="btn-ghost" id="sampleBtn" title="Load an example set of modules">Load Example</button>
+            <button class="btn-ghost" id="clearBtn" title="Remove all modules">Clear</button>
+          </div>
+          <div class="controls" style="margin:8px 0 12px">
+            <span class="muted" id="creditHint"></span>
+          </div>
+          <div class="table-scroll">
+            <table class="modules" aria-label="Modules table">
+              <colgroup>
+                <col class="col-level">
+                <col class="col-code">
+                <col class="col-credits">
+                <col class="col-mark">
+                <col class="col-actions">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th id="levelHeader">Level</th>
+                  <th>Module code</th>
+                  <th>Credits</th>
+                  <th>Mark</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </section>
+        </div>
+      <div class="col col-right">
+        <section class="card card2">
+          <h2>2) Results</h2>
+          <div class="kpi" id="kpiArea" role="status" aria-live="polite"></div>
+          <div id="classification" class="muted" style="margin-top:8px"></div>
+          <details style="margin-top:10px">
+            <summary>How this is calculated</summary>
+            <div id="explain"></div>
+          </details>
+          <div class="card muted" id="warnings" role="alert" aria-live="assertive" style="margin-top:12px; display:none"></div>
+        </section>
+        <section class="card card3">
+        <h2>3) Save &amp; privacy</h2>
+        <p class="muted">Your modules can be saved in a cookie on this device (no tracking). You can also export/import a JSON file.</p>
+        <div class="inline" style="margin:8px 0 12px">
+          <button id="exportBtn">Export JSON</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none" />
+          <button id="importBtn">Import JSON</button>
+          <br>
+          <label class="cookie-toggle" title="Toggle saving data in a cookie">
+            <span>Save to cookie</span>
+            <span id="cookieSwitch" class="switch" role="switch" tabindex="0" aria-checked="false" aria-label="Save to cookie"><span class="knob"></span></span>
+          </label>
+          <button class="btn-danger" id="resetCookieBtn">Delete cookie</button>
+        </div>
+        <div class="footer">
+          <div id="thresholdsText"><strong>Undergraduate classes:</strong> 1st ≥ 70 · 2:1 ≥ 60 · 2:2 ≥ 50 · 3rd ≥ 40 · Fail &lt; 40</div>
+          <div><a class="muted" href="#" id="showSchema">Show data schema</a></div>
+        </div>
+        <dialog id="schemaDialog">
+          <div class="card" style="max-width: 700px">
+            <h2>Data schema</h2>
+            <pre class="muted" id="schemaText" style="white-space: pre-wrap"></pre>
+            <div class="controls"><button id="closeSchema">Close</button></div>
+          </div>
+        </dialog>
+        </section>
+        </div>
+      </div>
+      <section class="card" style="margin-top:16px">
+        <div class="notice">
+          <strong>Disclaimer:</strong> This calculator is an unofficial prediction tool. It reflects academic regulations but does not guarantee your final classification. Your official result is confirmed only by the University’s assessment boards.
+        </div>
+      </section>
+    </main>
+    <footer role="contentinfo" class="site-footer">
+      <p>
+        <a class="github-link"
+          href="https://github.com/CompEng0001"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="Visit GitHub profile">
+          Made with <span aria-label="love" role="img">❤️</span> CompEng0001 2025/26
+        </a>
+      </p>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
